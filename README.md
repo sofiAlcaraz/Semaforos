@@ -1,10 +1,10 @@
 = Systemas Operativos: Trabajo Practico de Semaforos
-Sofia Melina_Alcaraz <sofiialcaraz16@gmail.com>
-v1, {docdate}. Docentes Mariano Vargas, Noelia Sosa e Ignacio Tula (COM-01)
-:title-page:
-:numbered:
-:source-highlighter: coderay
-:tabsize: 4
+ Sofia Melina_Alcaraz <sofiialcaraz16@gmail.com>
+ v1, {docdate}.Docentes Mariano Vargas, Noelia Sosa e Ignacio Tula (COM-01)
+ :title-page:
+ :numbered:
+ :source-highlighter: coderay
+ :tabsize: 4
 
 == Introducción
 
@@ -153,5 +153,5 @@ receta.txt:
 accion;ingrediente;ingrediente2;
 
 == Conclusiones
-EL codigo era bastante claro asi que no me costo mucho entenderlo, la parte de semaforos no me costo tanto ya que realize las practicas.
-El trabajo me ayudo mucho para refrescar temas y aprender cosas nuevas.
+ EL codigo era bastante claro asi que no me costo mucho entenderlo, la parte de semaforos no me costo tanto ya que realize las practicas.
+ El trabajo me ayudo mucho para refrescar temas y aprender cosas nuevas.
