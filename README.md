@@ -49,82 +49,84 @@ sem_usarSarten      1
 sem_usarHorno       2
 
 cortar1(){
-		salida de texto()
+
+		corta()
 		v(sem_mezclar)
 
 }
 mezclar(){
 	
 		p(sem_mezclar)
-		salida de texto()
+		mezcla()
 		v(sem_ponerSal)
 
 }
 ponerSal(){
 	
 		p(sem_ponerSal)
-    p(sem_usarSalero)
-		salida de texto()
-    vsem_usarSalero)
+    		p(sem_usarSalero)
+		usarSal()
+    		v(sem_usarSalero)
 		v(sem_agregarCarne)
 
 }
 agregarCarne{
 	
 		p(sem_agregarCarne)
-		salida de texto()
+		agregarLaCarne()
 		v(empanar)
 
 }
 empanar(){
 	
 		p(sem_empanar)
-		salida de texto()
+		empanar()
 		v(sem_usarSarten)
 
 }
 usarSarten(){
 	
 		p(sem_usarSarten)
-     p(sem_usarSarten);
-		salida de texto()
-     v(sem_usarSarten)
-     v(sem_listo1)
+     		p(sem_usarSarten);//compartido
+		usarSarten()
+     		v(sem_usarSarten)//compartido
+    		v(sem_listo1)
  
 }
 usarHorno(){
 	
-		p(sem_usarHorno)
-		salida de texto()
-    p(sem_usarHorno)
+		p(sem_usarHorno)//compartido
+		uasrHorno()
+    		p(sem_usarHorno)
 		v(sem_listo2)
 
 }
 cortar2(){
 
-		salida de texto()
+		cortar2()
 		v(sem_listo3)
 
 }
 cortar3(){
 
-		salida de texto()
+		cortar3()
 		v(sem_listo4)
 
 }
 armar(){
 	
 		p(sem_listo1)
-    p(sem_listo2)
-    p(sem_listo3)
-		salida de texto()
+   		p(sem_listo2)
+    		p(sem_listo3)
+		p(sem_listo4)
+		armar()
 		v(sem_entregar)
 
 }
 entregar(){
 	
 		p(sem_entregar)
-		salida de texto()
+		entregar()
 
 }
 
