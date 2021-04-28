@@ -1,4 +1,4 @@
-= Systemas Operativos: Trabajo Practico de Semaforos
+﻿= Systemas Operativos: Trabajo Practico de Semaforos
  Sofia Melina_Alcaraz <sofiialcaraz16@gmail.com>
  v1, {docdate}.Docentes Mariano Vargas, Noelia Sosa e Ignacio Tula (COM-01)
  :title-page:
