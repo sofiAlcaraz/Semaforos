@@ -28,7 +28,7 @@ al comparador csrpy.
 
 == Implementación
 Los semáforos mutex Individuales: sem_mezclar, sem_ponerSal, sem_agregarCarne, sem_empanar, sem_usarSarten,sem_listo1, sem_listo2, sem_listo3,sem_listo4,sem_entregar.
-Semaforos compartidos mutex : sem_usarSalero, sem_usarSarten.
+Semaforos compartidos mutex : sem_usarSalero, sem_usarSarten,sem_escribir.
 Semáforo contador compartido : sem_usarHorno==2.
 
 Cada hilo haría una acción y funcionaria de la siguiente forma:
@@ -43,6 +43,7 @@ Cada hilo haría una acción y funcionaria de la siguiente forma:
  sem_listo4         0
  sem_entregar       0
 
+sem_escribir        1
 sem_usarSalero      1     
 sem_usarSarten      1
 
@@ -130,6 +131,15 @@ entregar(){
 
 }
 
+ El semaforo sem_escribir estaria de la siguiente forma en todas las funciones:
+
+funcionX(){
+		p(sem_escribir)
+		imprimirAccion()
+		v(sem_escirbir)
+	}
+
+
 Cada hilo encendería al próximo semáforo para que se ejecute de forma correcta.
  Luego vi el video de noelia y prepare todo para llevar mi idea a codigo.
 El tema de hilos fue sencillo, el problema luego de eso era leer de un archivo
@@ -143,6 +153,7 @@ while(llegue al final del fichero){
 	cad=extraigo una linea del txt
 	palabra=accion
   (paso la accion ,i)
+  	j=0;
 	while(llego al final de la linea){
 		otraPalabra=ingrediente 
 	  (paso la ccion con el i y los ingredientes con la j)
@@ -154,6 +165,7 @@ Para que esto funcione separe las palabras con “;” y use la siguiente estruc
 receta.txt:
 accion;ingrediente;ingrediente2;
 
+Para mostrar por pantalla utilice fprintf(archivo,[..]) y como guardaba todo al reves me di cuenta que tuve el mismo problema que tuve con el buffer en la practica y luego de investigar encontre algo util que es la funcion fflush() que obliga al 
 == Conclusion
 
  EL codigo era bastante claro asi que no me costo mucho entenderlo, la parte de semaforos no me costo tanto ya que realize las practicas.
