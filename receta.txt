@@ -1,10 +1,11 @@
 cortar1;2dientes de ajo;1punado de perejil;
 mezclar;ajo;perejil;1huevo;
-usar;sal;mezcla;
-agregar;carne;mezcla;
+ponerSal;sal;mezcla;
+agregarCarne;carne;mezcla;
 empanar;milanesa;
-cocinar;milanesa;
-hornear;pan;
-cortar2;lechuga;tomate;cebolla morada;pepino;
+usarSarten;milanesa;
+usarHorno;pan;
+cortar2;lechuga;tomate;
+cortar3:cebolla morada;pepino;
 armar;milanesa;pan;verduras;
 entregar;sandwich;

@@ -10,7 +10,7 @@
 sem_t sem_usarSalero;
 sem_t sem_usarSarten;
 sem_t sem_usarHorno;
-
+sem_t sem_escribir;
 //creo estructura de semaforos 
 struct semaforos {
 	sem_t sem_mezclar;
@@ -53,20 +53,27 @@ void* imprimirAccion(void *data, char *accionIn) {
 	for(i = 0; i < sizeArray; i ++){
 		//pregunto si la accion del array es igual a la pasada por parametro (si es igual la funcion strcmp devuelve cero)
 		if(strcmp(mydata->pasos_param[i].accion, accionIn) == 0){
-		fprintf(archivo,"\tEquipo %d - accion %s \n " , mydata->equipo_param, mydata->pasos_param[i].accion);
+		printf("\tEquipo %d - accion %s \n " , mydata->equipo_param, mydata->pasos_param[i].accion);
+		fprintf(archivo,"\tEquipo %d - accion %s\n ",mydata->equipo_param, mydata->pasos_param[i].accion);
 		//calculo la longitud del array de ingredientes
 		int sizeArrayIngredientes = (int)( sizeof(mydata->pasos_param[i].ingredientes) / sizeof(mydata->pasos_param[i].ingredientes[0]) );
 		//indice para recorrer array de ingredientes
 		int h;
+		//agregar archivo
+		printf("\tEquipo %d ----------ingredientes : -------\n",mydata->equipo_param);
 		fprintf(archivo,"\tEquipo %d -----------ingredientes : ----------\n",mydata->equipo_param); 
 			for(h = 0; h < sizeArrayIngredientes; h++) {
 				//consulto si la posicion tiene valor porque no se cuantos ingredientes tengo por accion 
 				if(strlen(mydata->pasos_param[i].ingredientes[h]) != 0) {
+							//agregar archivo
+							printf("tEquipo %d ingrediente %d: %s \n",mydata->equipo_param,h,mydata->pasos_param[i].ingredientes[h]);
 							fprintf(archivo,"\tEquipo %d ingrediente  %d : %s \n",mydata->equipo_param,h,mydata->pasos_param[i].ingredientes[h]);
 				}
 			}
 		}
+		fflush(archivo);//forzar para que grabe ahora el contenido del buffer.
 	}
+	fclose(archivo);
 }
 
 //funcion para tomar de ejemplo
@@ -76,7 +83,9 @@ void* cortar1(void *data) {
 	//creo el puntero para pasarle la referencia de memoria (data) del struct pasado por parametro (la cual es un puntero). 
 	struct parametro *mydata = data;
 	//llamo a la funcion imprimir le paso el struct y la accion de la funcion
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	//uso sleep para simular que que pasa tiempo
 	usleep( 30000 );
 	//doy la señal a la siguiente accion (cortar me habilita mezclar)
@@ -88,7 +97,9 @@ void* mezclar(void *data){
 	char *accion="mezclar";
 	struct parametro *mydata = data;
 	sem_wait(&mydata->semaforos_param.sem_mezclar);
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(3000);
 	sem_post(&mydata->semaforos_param.sem_ponerSal);
 
@@ -99,7 +110,9 @@ void* ponerSal(void *data){
 	struct parametro *mydata = data;
 	sem_wait(&mydata->semaforos_param.sem_ponerSal);
 	sem_wait(&sem_usarSalero);
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(20000);
 	sem_post(&sem_usarSalero);
 	sem_post(&mydata->semaforos_param.sem_agregarCarne);
@@ -108,7 +121,9 @@ void* agregarCarne(void *data){
 	char *accion="agregarCarne";
 	struct parametro *mydata=data;
 	sem_wait(&mydata->semaforos_param.sem_agregarCarne);
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(20000);
 	sem_post(&mydata->semaforos_param.sem_empanar);
 
@@ -117,7 +132,9 @@ void* empanar(void *data){
 	char *accion="empanar";
 	struct parametro *mydata=data;
 	sem_wait(&mydata->semaforos_param.sem_empanar);
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(40000);
 	sem_post(&mydata->semaforos_param.sem_usarSarten);
 
@@ -127,7 +144,9 @@ void* usarSarten(void *data){
 	struct parametro *mydata=data;
 	sem_wait(&mydata->semaforos_param.sem_usarSarten);
 	sem_wait(&sem_usarSarten);
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata ,accion);
+	sem_post(&sem_escribir);
 	usleep(5);
 	sem_post(&sem_usarSarten);
 	sem_post(&mydata->semaforos_param.sem_listo1);
@@ -139,7 +158,9 @@ void* usarHorno(void *data){
 	sem_wait(&sem_usarHorno);
 	char *accion="usarHorno";
 	struct parametro *mydata=data;
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(50000);
 	sem_post(&sem_usarHorno);
 	sem_post(&mydata->semaforos_param.sem_listo2);
@@ -148,14 +169,18 @@ void* usarHorno(void *data){
 void* cortar2(void *data){
 	char *accion ="cortar2";
 	struct parametro *mydata=data;
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(3);
 	sem_post(&mydata->semaforos_param.sem_listo3);
 }
 void* cortar3(void *data){
 	char *accion="cortar3";
 	struct parametro *mydata=data;
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(3);
 	sem_post(&mydata->semaforos_param.sem_listo4);
 }
@@ -166,7 +191,9 @@ void* armar(void *data){
 	sem_wait(&mydata->semaforos_param.sem_listo2);
 	sem_wait(&mydata->semaforos_param.sem_listo3);
 	sem_wait(&mydata->semaforos_param.sem_listo4);
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(3);
 	sem_post(&mydata->semaforos_param.sem_entregar);
 
@@ -175,7 +202,9 @@ void*  entregar(void *data){
 	char *accion="entregar";
 	struct parametro *mydata=data;
 	sem_wait(&mydata->semaforos_param.sem_entregar);
+	sem_wait(&sem_escribir);
 	imprimirAccion(mydata,accion);
+	sem_post(&sem_escribir);
 	usleep(3);
 }
 
@@ -234,10 +263,11 @@ void* ejecutarReceta(void *i) {
 	pthread_data->semaforos_param.sem_entregar = sem_entregar;
 
 	//seteo las acciones y los ingredientes (Faltan acciones e ingredientes) ¿Se ve hardcodeado no? ¿Les parece bien?
-     	/*strcpy(pthread_data->pasos_param[0].accion, "cortar1");
+/*
+     	strcpy(pthread_data->pasos_param[0].accion, "cortar1");
 	strcpy(pthread_data->pasos_param[0].ingredientes[0], "ajo");
         strcpy(pthread_data->pasos_param[0].ingredientes[1], "perejil");
-	    strcpy(pthread_data->pasos_param[1].accion, "mezclar");
+	   strcpy(pthread_data->pasos_param[1].accion, "mezclar");
 	strcpy(pthread_data->pasos_param[1].ingredientes[0], "ajo");
       strcpy(pthread_data->pasos_param[1].ingredientes[1], "perejil");
  	 strcpy(pthread_data->pasos_param[1].ingredientes[2], "huevo");
@@ -258,11 +288,10 @@ void* ejecutarReceta(void *i) {
 	int k=0;
 	int j=0;
 	while(fgets(cad,50,archivo)!=NULL){//lee por lineas,hasta ultim linea
-		//fgets(cad,30,archivo);
-		//printf("%s",cad);
 		char *token=strtok(cad,";");
-		//printf("%s\n",token);
 		strcpy(pthread_data->pasos_param[k].accion,token);
+		j=0;
+		token=strtok(NULL,";");
 		while(token!=NULL){
 			strcpy(pthread_data->pasos_param[k].ingredientes[j],token);
 			token=strtok(NULL,";");
@@ -337,6 +366,7 @@ void* ejecutarReceta(void *i) {
 	fclose(archivo);
 	//salida del hilo
 	 pthread_exit(NULL);
+
 }
 
 
@@ -346,6 +376,7 @@ int main ()
 	sem_init(&sem_usarSalero,0,1);
 	sem_init(&sem_usarSarten,0,1);
 	sem_init(&sem_usarHorno,0,2);
+	sem_init(&sem_escribir,0,1);
 	//creo los nombres de los equipos 
 	int rc;
 	int *equipoNombre1 =malloc(sizeof(*equipoNombre1));
@@ -392,7 +423,7 @@ int main ()
 	sem_destroy(&sem_usarSalero);
 	sem_destroy(&sem_usarSarten);
 	sem_destroy(&sem_usarHorno);
-
+	sem_destroy(&sem_escribir);
     pthread_exit(NULL);
 	return -1;
 }
