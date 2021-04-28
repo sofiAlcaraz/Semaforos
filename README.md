@@ -1,4 +1,4 @@
-﻿= Systemas Operativos: Trabajo Practico de Semaforos
+= Systemas Operativos: Trabajo Practico de Semaforos
  Sofia Melina_Alcaraz <sofiialcaraz16@gmail.com>
  v1, {docdate}.Docentes Mariano Vargas, Noelia Sosa e Ignacio Tula (COM-01)
  :title-page:
@@ -165,7 +165,7 @@ Para que esto funcione separe las palabras con “;” y use la siguiente estruc
 receta.txt:
 accion;ingrediente;ingrediente2;
 
-Para mostrar por pantalla utilice fprintf(archivo,[..]) y como guardaba todo al reves me di cuenta que tuve el mismo problema que tuve con el buffer en la practica y luego de investigar encontre algo util que es la funcion fflush() que obliga al 
+Para mostrar por pantalla utilice fprintf(archivo,[..]) y como guardaba todo al reves me di cuenta que tuve el mismo problema que tuve con el buffer en la practica y luego de investigar encontre algo util que es la funcion fflush() hace que se  grabe el contenido del buffer hasta el momento.
 == Conclusion
 
  EL codigo era bastante claro asi que no me costo mucho entenderlo, la parte de semaforos no me costo tanto ya que realize las practicas.
