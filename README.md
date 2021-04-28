@@ -1,10 +1,10 @@
 = Systemas Operativos: Trabajo Practico de Semaforos
- Sofia Melina_Alcaraz <sofiialcaraz16@gmail.com>
- v1, {docdate}. Docentes Mariano Vargas, Noelia Sosa e Ignacio Tula (COM-01)
- :title-page:
- :numbered:
- :source-highlighter: coderay
- :tabsize: 4
+Sofia Melina_Alcaraz <sofiialcaraz16@gmail.com>
+v1 , {docdate}. Docentes Mariano Vargas, Noelia Sosa e Ignacio Tula (COM-01)
+:title-page:
+:numbered:
+:source-highlighter: coderay
+:tabsize: 4
 
 == Introducción
 
@@ -32,29 +32,36 @@ Semaforos compartidos mutex : sem_usarSalero, sem_usarSarten,sem_escribir.
 Semáforo contador compartido : sem_usarHorno==2.
 
 Cada hilo haría una acción y funcionaria de la siguiente forma:
- sem_mezclar        0
- sem_ponerSal       0
- sem_agregarCarne   0
- sem_empanar        0
- sem_usarSarten     0
- sem_listo1         0
- sem_listo2         0
- sem_listo3         0
- sem_listo4         0
- sem_entregar       0
+- Individuales:
+  * sem_mezclar        0
+  * sem_ponerSal       0
+  * sem_agregarCarne   0
+  * sem_empanar        0
+  * sem_usarSarten     0
+  * sem_listo1         0
+  * sem_listo2         0
+  * sem_listo3         0
+  * sem_listo4         0
+  * sem_entregar       0
 
-sem_escribir        1
-sem_usarSalero      1     
-sem_usarSarten      1
+- Compartidos:
+ * sem_escribir        1
+ * sem_usarSalero      1     
+ * sem_usarSarten      1
+ * sem_usarHorno       2
 
-sem_usarHorno       2
-
+ [source, c]
+----
 cortar1(){
 
 		corta()
 		v(sem_mezclar)
 
 }
+----
+
+ [source, c]
+----
 mezclar(){
 	
 		p(sem_mezclar)
@@ -62,6 +69,10 @@ mezclar(){
 		v(sem_ponerSal)
 
 }
+----
+
+ [source, c]
+----
 ponerSal(){
 	
 		p(sem_ponerSal)
@@ -71,6 +82,9 @@ ponerSal(){
 		v(sem_agregarCarne)
 
 }
+----
+ [source, c]
+----
 agregarCarne{
 	
 		p(sem_agregarCarne)
@@ -78,6 +92,8 @@ agregarCarne{
 		v(empanar)
 
 }
+ [source, c]
+----
 empanar(){
 	
 		p(sem_empanar)
@@ -85,6 +101,9 @@ empanar(){
 		v(sem_usarSarten)
 
 }
+----
+ [source, c]
+----
 usarSarten(){
 	
 		p(sem_usarSarten)
@@ -94,6 +113,9 @@ usarSarten(){
     		v(sem_listo1)
  
 }
+----
+ [source, c]
+----
 usarHorno(){
 	
 		p(sem_usarHorno)//compartido
@@ -102,18 +124,27 @@ usarHorno(){
 		v(sem_listo2)
 
 }
+----
+ [source, c]
+----
 cortar2(){
 
 		cortar2()
 		v(sem_listo3)
 
 }
+----
+ [source, c]
+----
 cortar3(){
 
 		cortar3()
 		v(sem_listo4)
 
 }
+---
+ [source, c]
+----
 armar(){
 	
 		p(sem_listo1)
@@ -124,20 +155,25 @@ armar(){
 		v(sem_entregar)
 
 }
+----
+ [source, c]
+----
 entregar(){
 	
 		p(sem_entregar)
 		entregar()
 
 }
-
+----
  El semaforo sem_escribir estaria de la siguiente forma en todas las funciones:
-
+ [source, c]
+----
 funcionX(){
 		p(sem_escribir)
 		imprimirAccion()
 		v(sem_escirbir)
 	}
+----
 
 
 Cada hilo encendería al próximo semáforo para que se ejecute de forma correcta.
@@ -146,7 +182,9 @@ El tema de hilos fue sencillo, el problema luego de eso era leer de un archivo
  y que la salida salga en otro.
  
  
-Para leer el archivo de texto pense los siguente:
+ .Para leer el archivo de texto pense los siguente:
+ [source, c]
+----
 i=0
 j=0
 while(llegue al final del fichero){
@@ -161,6 +199,7 @@ while(llegue al final del fichero){
   }
   i++
 }
+----
 Para que esto funcione separe las palabras con “;” y use la siguiente estructura en el archivo 
 receta.txt:
 accion;ingrediente;ingrediente2;
