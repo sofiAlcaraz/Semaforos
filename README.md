@@ -166,15 +166,14 @@ entregar(){
 }
 ----
 
- .El semaforo sem_escribir estaria de la siguiente forma en todas las funciones
- [source, c]
-----
+ El semaforo sem_escribir estaria de la siguiente forma en todas las funciones:
+
+
 funcionX(){
 		p(sem_escribir)
 		imprimirAccion()
 		v(sem_escirbir)
 	}
-----
 
 
 Cada hilo encendería al próximo semáforo para que se ejecute de forma correcta.
@@ -183,9 +182,7 @@ El tema de hilos fue sencillo, el problema luego de eso era leer de un archivo
  y que la salida salga en otro.
  
  
- .Para leer el archivo de texto pense los siguente
- [source, c]
-----
+Para leer el archivo de texto pense los siguente:
 
 i=0
 j=0
@@ -201,9 +198,6 @@ while(llegue al final del fichero){
   }
   i++
 }
-
-----
-
 
 Para que esto funcione separe las palabras con “;” y use la siguiente estructura en el archivo 
 receta.txt:
