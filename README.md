@@ -165,7 +165,8 @@ entregar(){
 
 }
 ----
- El semaforo sem_escribir estaria de la siguiente forma en todas las funciones:
+
+ .El semaforo sem_escribir estaria de la siguiente forma en todas las funciones
  [source, c]
 ----
 funcionX(){
